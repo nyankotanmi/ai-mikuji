@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>おみくじ結果（アニメーション付き）</title>
+  <title>おみくじ結果（SNSシェア付き）</title>
   <style>
     body {
       background-color: #ffe4f0;
@@ -70,6 +70,30 @@
       animation: starFall 3s ease-out forwards;
     }
 
+    .share-buttons {
+      margin-top: 30px;
+      font-size: 16px;
+    }
+
+    .share-buttons a {
+      color: white;
+      background-color: #1da1f2;
+      padding: 10px 20px;
+      margin: 0 10px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      display: inline-block;
+    }
+
+    .share-buttons a:hover {
+      opacity: 0.8;
+    }
+
+    #line-share {
+      background-color: #00c300;
+    }
+
     @keyframes sparkle {
       0% { opacity: 0; transform: scale(0.5); }
       50% { opacity: 1; transform: scale(1.2); }
@@ -95,6 +119,12 @@
     <div class="wink"></div>
   </div>
   <p class="text" id="characterText"></p>
+
+  <div class="share-buttons">
+    <h2>結果をシェアしよう！</h2>
+    <a id="twitter-share" target="_blank">X（旧Twitter）でシェア</a>
+    <a id="line-share" target="_blank">LINEでシェア</a>
+  </div>
 
   <script>
     const characters = [
@@ -131,6 +161,14 @@
         document.body.appendChild(star);
       }
     }, 2000);
+
+    // SNSシェアリンク生成
+    const pageUrl = window.location.href;
+    const text = encodeURIComponent("私の推しタイプはこの子でした！");
+    document.getElementById("twitter-share").href =
+      `https://twitter.com/intent/tweet?text=${text}&url=${pageUrl}`;
+    document.getElementById("line-share").href =
+      `https://social-plugins.line.me/lineit/share?url=${pageUrl}`;
   </script>
 </body>
 </html>
