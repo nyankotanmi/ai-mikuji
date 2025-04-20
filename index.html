@@ -4,26 +4,122 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>AIおみくじ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Single+Day&display=swap" rel="stylesheet">
   <style>
-    body { font-family: sans-serif; text-align: center; margin-top: 3em; background: #f8f8ff; }
-    input { padding: 10px; font-size: 1em; }
-    button { padding: 10px 20px; font-size: 1em; margin-left: 10px; }
-    #result { margin-top: 2em; white-space: pre-wrap; background: #fff; padding: 1em; border-radius: 8px; max-width: 90%; margin-left: auto; margin-right: auto; box-shadow: 0 0 10px #ccc; }
+    :root {
+      --pink: #FFD1D7;
+      --mint: #B5E4D5;
+      --blue: #B5E0EB;
+      --lavender: #DEC7ED;
+    }
+
+    body {
+      font-family: 'Single Day', sans-serif;
+      background: linear-gradient(135deg, var(--blue), var(--pink), var(--lavender));
+      background-size: 300% 300%;
+      animation: gradient 10s ease infinite;
+      text-align: center;
+      padding: 3em 1em;
+      color: #555;
+    }
+
+    h1 {
+      font-size: 2.2em;
+      margin-bottom: 0.5em;
+      color: #fff;
+      text-shadow: 0 0 8px #fff;
+    }
+
+    input {
+      padding: 12px;
+      font-size: 1em;
+      border: none;
+      border-radius: 20px;
+      outline: none;
+      width: 70%;
+      max-width: 300px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+
+    button {
+      padding: 12px 24px;
+      margin-left: 8px;
+      font-size: 1em;
+      border: none;
+      border-radius: 30px;
+      background-color: var(--mint);
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      transition: transform 0.1s ease;
+    }
+
+    button:active {
+      transform: scale(0.95);
+    }
+
+    #result {
+      margin-top: 2em;
+      background: #fff;
+      border-radius: 15px;
+      padding: 1.5em;
+      max-width: 90%;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0 0 15px rgba(255, 192, 203, 0.3);
+      white-space: pre-wrap;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .kawaii {
+      font-size: 2em;
+      display: block;
+      margin-top: 1em;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .mascot {
+      width: 100px;
+      margin: 1em auto;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
   </style>
 </head>
 <body>
-  <h1>AIおみくじ</h1>
-  <input type="text" id="nameInput" placeholder="名前を入力してね"/>
+  <h1>今日のAIおみくじ</h1>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Emoji_u1f984.svg/2048px-Emoji_u1f984.svg.png" class="mascot" alt="ユニコーン">
+
+  <input type="text" id="nameInput" placeholder="あなたの名前は？" />
   <button onclick="drawOmikuji()">占う！</button>
 
   <div id="result"></div>
 
   <script>
     async function drawOmikuji() {
-      const name = document.getElementById('nameInput').value || "ななしさん";
+      const name = document.getElementById('nameInput').value || "ななしちゃん";
       const res = await fetch(`/api/draw?name=${encodeURIComponent(name)}`);
       const data = await res.json();
-      document.getElementById('result').textContent = data.result;
+
+      const resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = `
+        <span class="kawaii">★${name}ちゃんの運勢★</span>\n
+        ${data.result}
+      `;
     }
   </script>
 </body>
