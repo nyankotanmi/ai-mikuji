@@ -1,66 +1,49 @@
 
-<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1"><title>結果</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet">
-<style>
-:root{--g1:#ff6ec7;--g2:#9e6bff}
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:linear-gradient(120deg,var(--g1),var(--g2));min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:20px;font-family:'Poppins',sans-serif;overflow-x:hidden}
-#card{background:#fff;border-radius:20px;padding:20px;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.25);max-width:340px;position:relative}
-#card img{width:100%;border-radius:15px}
-h2{font-size:1.4rem;color:#ff6ec7;margin:1rem 0 .4rem}
-p{color:#444;font-size:.95rem;margin-bottom:.4rem}
-button,.share{margin-top:.8rem;padding:.7rem 1.4rem;border:none;border-radius:40px;font-weight:600;cursor:pointer;transition:transform .25s;font-size:.9rem;color:#fff}
-button:hover,.share:hover{transform:scale(1.07)}
-#retry{background:#ff6ec7}
-#shot{background:#6a5acd}
-.share{background:#1da1f2;text-decoration:none;display:inline-block}
-#ln{background:#00c300}
-.floatBg span{position:absolute;opacity:.8;font-size:20px;animation:float 8s linear infinite;pointer-events:none}
-@keyframes float{0%{transform:translateY(100vh) rotate(0deg);opacity:0}20%{opacity:1}100%{transform:translateY(-120vh) rotate(360deg);opacity:0}}
-</style>
-</head><body>
-<div class="floatBg" id="bg"></div>
-<div id="card">
-  <img id="img" alt="char">
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>おみくじ結果</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; background: #fff0f5; padding: 20px; }
+    #img { width: 80%; max-width: 320px; border-radius: 12px; margin: 20px 0; }
+    h2 { color: #ff6ec7; }
+  </style>
+</head>
+<body>
+  <h1>あなたの推しタイプは…</h1>
+  <img id="img" alt="推し画像"/>
   <h2 id="title"></h2>
   <p id="desc"></p>
-  <p id="lucky"></p>
-  <button id="retry">もう1回</button>
-  <button id="shot">スクショ</button><br>
-  <a id="tw" class="share" target="_blank">Xでシェア</a>
-  <a id="ln" class="share" target="_blank">LINEでシェア</a>
-  <audio id="bgm" loop src="bgm.mp3"></audio>
-</div>
-<canvas id="confetti" style="position:fixed;inset:0;pointer-events:none;"></canvas>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-<script>
-const d=[{i:'IMG_0123.png',t:'Healing Angel',d:'繊細だけど芯が強い。静かに優しさを届ける癒し系。'},/*…同様に16個*/];
-while(d.length<16){d.push({i:'IMG_0123.gif',t:'placeholder',d:'desc'})}
-const q=new URLSearchParams(location.search);let c=q.get('c');if(c===null)c=Math.random()*16|0;
-render(c);
-function render(id){
- const o=d[id];
- document.getElementById("img").src = d[id].i;
- document.getElementById('title').textContent=o.t;
- document.getElementById('desc').textContent=o.d;
- document.getElementById('lucky').textContent='ラッキーアイテム：'+['🍭','💎','🎧','📸'][Math.random()*4|0];
- // confetti
- confetti({particleCount:120,spread:70,origin:{y:.6}});
- // save history
- let h=JSON.parse(localStorage.getItem('history')||'[]');h.push(o.t);localStorage.setItem('history',JSON.stringify(h));
- // share
- const u=encodeURIComponent(location.href.split('?')[0]+'?c='+id);
- const txt=encodeURIComponent('私の推しタイプは『'+o.t+'』！');
- document.getElementById('tw').href=`https://twitter.com/intent/tweet?text=${txt}&url=${u}`;
- document.getElementById('ln').href=`https://social-plugins.line.me/lineit/share?url=${u}`;
-}
-document.getElementById('retry').onclick=()=>{render(Math.random()*16|0)};
-document.getElementById('shot').onclick=()=>{html2canvas(document.getElementById('card')).then(c=>{const a=document.createElement('a');a.download='omikuji.png';a.href=c.toDataURL();a.click();})};
-// floating BG
-const bg=document.getElementById('bg');['⭐','🌙','✨','💖','💫'].forEach(e=>{for(let i=0;i<20;i++){const s=document.createElement('span');s.textContent=e;s.style.left=Math.random()*100+'vw';s.style.fontSize=Math.random()*26+16+'px';s.style.animationDuration=Math.random()*6+6+'s';s.style.animationDelay=Math.random()*4+'s';bg.appendChild(s);}});
-// touch to play bgm
-document.body.addEventListener('click',()=>document.getElementById('bgm').play(),{once:true});
-</script>
-</body></html>
+
+  <script>
+    const d = [
+      { i: "IMG_0123.png", t: "Sunshine Idol", d: "明るく元気な太陽のような存在！" },
+      { i: "IMG_0124.png", t: "Cool Beauty", d: "クールで知的、静かな魅力を放つ！" },
+      { i: "IMG_0125.png", t: "Mysterious Soul", d: "ちょっと影のある不思議ちゃんタイプ。" },
+      { i: "IMG_0126.png", t: "Sweet Angel", d: "優しくて癒し系、みんなの天使！" },
+      { i: "IMG_0127.png", t: "Energetic Star", d: "いつも元気でムードメーカー！" },
+      { i: "IMG_0128.png", t: "Fashion Icon", d: "おしゃれで流行に敏感なトレンドガール。" },
+      { i: "IMG_0129.png", t: "Pure Innocent", d: "ピュアでまっすぐな心の持ち主。" },
+      { i: "IMG_0130.png", t: "Tsundere Princess", d: "ツンツンしつつもデレが尊い！" },
+      { i: "IMG_0131.png", t: "Chill Mystic", d: "落ち着いた不思議オーラの持ち主。" },
+      { i: "IMG_0132.png", t: "K-Pop Dancer", d: "キレキレな動きと圧巻ステージ！" },
+      { i: "IMG_0133.png", t: "Love Talker", d: "甘い言葉で心をくすぐる恋愛体質。" },
+      { i: "IMG_0134.png", t: "Gamer Girl", d: "ゲーマー気質で没入型！実はオタク？" },
+      { i: "IMG_0135.png", t: "Study Queen", d: "努力家で成績優秀、でも天然！？" },
+      { i: "IMG_0136.png", t: "Night Owl", d: "夜型人間、感性で生きるアーティスト。" },
+      { i: "IMG_0137.png", t: "Emo Princess", d: "ちょっと病みカワ系な愛されキャラ。" },
+      { i: "IMG_0138.png", t: "Mystic Diva", d: "神秘的で引き込まれるカリスマ！" }
+    ];
+
+    // ランダムに選ぶ（d.lengthに合わせる）
+    let id = Math.floor(Math.random() * d.length);
+    const o = d[id];
+
+    document.getElementById("img").src = o.i;
+    document.getElementById("title").textContent = o.t;
+    document.getElementById("desc").textContent = o.d;
+  </script>
+</body>
+</html>
