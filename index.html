@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AIおみくじ</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; margin-top: 3em; background: #f8f8ff; }
+    input { padding: 10px; font-size: 1em; }
+    button { padding: 10px 20px; font-size: 1em; margin-left: 10px; }
+    #result { margin-top: 2em; white-space: pre-wrap; background: #fff; padding: 1em; border-radius: 8px; max-width: 90%; margin-left: auto; margin-right: auto; box-shadow: 0 0 10px #ccc; }
+  </style>
+</head>
+<body>
+  <h1>AIおみくじ</h1>
+  <input type="text" id="nameInput" placeholder="名前を入力してね"/>
+  <button onclick="drawOmikuji()">占う！</button>
+
+  <div id="result"></div>
+
+  <script>
+    async function drawOmikuji() {
+      const name = document.getElementById('nameInput').value || "ななしさん";
+      const res = await fetch(`/api/draw?name=${encodeURIComponent(name)}`);
+      const data = await res.json();
+      document.getElementById('result').textContent = data.result;
+    }
+  </script>
+</body>
+</html>
