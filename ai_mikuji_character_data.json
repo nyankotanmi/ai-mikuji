@@ -1,0 +1,146 @@
+[
+  {
+    "title": "Sunshine Idol",
+    "file": "IMG_0123.png",
+    "role": "元気担当",
+    "color": "#FFD93D",
+    "en": "Sunshine Idol",
+    "ko": "햇살 아이돌",
+    "zh": "阳光偶像"
+  },
+  {
+    "title": "Cool Beauty",
+    "file": "IMG_0124.png",
+    "role": "冷静知性派",
+    "color": "#89CFF0",
+    "en": "Cool Beauty",
+    "ko": "쿨 뷰티",
+    "zh": "冷艳美人"
+  },
+  {
+    "title": "Mysterious Soul",
+    "file": "IMG_0125.png",
+    "role": "不思議担当",
+    "color": "#D1A4F1",
+    "en": "Mysterious Soul",
+    "ko": "미스테리 영혼",
+    "zh": "神秘灵魂"
+  },
+  {
+    "title": "Sweet Angel",
+    "file": "IMG_0126.png",
+    "role": "癒し担当",
+    "color": "#FFC1CC",
+    "en": "Sweet Angel",
+    "ko": "달콤한 천사",
+    "zh": "甜美天使"
+  },
+  {
+    "title": "Energetic Star",
+    "file": "IMG_0127.png",
+    "role": "ムードメーカー",
+    "color": "#FF6B6B",
+    "en": "Energetic Star",
+    "ko": "에너지 스타",
+    "zh": "活力之星"
+  },
+  {
+    "title": "Fashion Icon",
+    "file": "IMG_0128.png",
+    "role": "おしゃれ番長",
+    "color": "#F67280",
+    "en": "Fashion Icon",
+    "ko": "패션 아이콘",
+    "zh": "时尚偶像"
+  },
+  {
+    "title": "Pure Innocent",
+    "file": "IMG_0129.png",
+    "role": "ピュア担当",
+    "color": "#FFF3B0",
+    "en": "Pure Innocent",
+    "ko": "순수 소녀",
+    "zh": "纯真少女"
+  },
+  {
+    "title": "Tsundere Princess",
+    "file": "IMG_0130.png",
+    "role": "ツンデレ姫",
+    "color": "#E1A1FF",
+    "en": "Tsundere Princess",
+    "ko": "츤데레 공주",
+    "zh": "傲娇公主"
+  },
+  {
+    "title": "Chill Mystic",
+    "file": "IMG_0131.png",
+    "role": "神秘担当",
+    "color": "#B5EAD7",
+    "en": "Chill Mystic",
+    "ko": "차분한 신비",
+    "zh": "冷静神秘"
+  },
+  {
+    "title": "K-Pop Dancer",
+    "file": "IMG_0132.png",
+    "role": "パフォーマンス隊長",
+    "color": "#A0E7E5",
+    "en": "K-Pop Dancer",
+    "ko": "케이팝 댄서",
+    "zh": "韩舞担当"
+  },
+  {
+    "title": "Love Talker",
+    "file": "IMG_0133.png",
+    "role": "恋愛体質",
+    "color": "#FDCB9E",
+    "en": "Love Talker",
+    "ko": "사랑 토커",
+    "zh": "恋爱话匣子"
+  },
+  {
+    "title": "Gamer Girl",
+    "file": "IMG_0134.png",
+    "role": "隠れオタク",
+    "color": "#C0C0C0",
+    "en": "Gamer Girl",
+    "ko": "게이머 소녀",
+    "zh": "游戏少女"
+  },
+  {
+    "title": "Study Queen",
+    "file": "IMG_0135.png",
+    "role": "努力家",
+    "color": "#AFE9FF",
+    "en": "Study Queen",
+    "ko": "공부 여왕",
+    "zh": "学霸女神"
+  },
+  {
+    "title": "Night Owl",
+    "file": "IMG_0136.png",
+    "role": "夜型人間",
+    "color": "#7B68EE",
+    "en": "Night Owl",
+    "ko": "밤 부엉이",
+    "zh": "夜猫子"
+  },
+  {
+    "title": "Emo Princess",
+    "file": "IMG_0137.png",
+    "role": "病みカワ系",
+    "color": "#F8B195",
+    "en": "Emo Princess",
+    "ko": "이모 프린세스",
+    "zh": "情绪公主"
+  },
+  {
+    "title": "Mystic Diva",
+    "file": "IMG_0138.png",
+    "role": "カリスマ担当",
+    "color": "#9D94FF",
+    "en": "Mystic Diva",
+    "ko": "미스틱 디바",
+    "zh": "神秘女王"
+  }
+]
