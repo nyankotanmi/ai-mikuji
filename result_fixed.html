@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>おみくじ結果</title>
+  <style>
+    body {
+      background-color: #ffe4f0;
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+
+    img {
+      width: 300px;
+      margin-top: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .text {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #444;
+      max-width: 80%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>今日のあなたのタイプは…</h1>
+  <img id="characterImage" src="" alt="キャラ画像">
+  <p class="text" id="characterText"></p>
+
+  <script>
+    const characters = [
+      { img: "IMG_0123.png", text: "繊細だけど芯が強い。静かに優しさを届ける癒し系。" },
+      { img: "IMG_0124.png", text: "明るくてムードメーカー。みんなの太陽みたいな存在。" },
+      { img: "IMG_0125.png", text: "冷静でクール。でも誰よりも仲間想いの一面も。" },
+      { img: "IMG_0126.png", text: "自由で好奇心旺盛。楽しいことが大好きな冒険女子！" },
+      { img: "IMG_0127.png", text: "ふわっとした笑顔の裏に情熱を秘めた努力家。" },
+      { img: "IMG_0128.png", text: "サバサバして見えるけど、実はロマンチスト。" },
+      { img: "IMG_0129.png", text: "論理的で頭の回転が早い。ひらめきの天才肌。" },
+      { img: "IMG_0130.png", text: "おっとり見えて実はマイペースな芯の強さアリ。" },
+      { img: "IMG_0131.png", text: "小悪魔的魅力で人を惹きつける天性のアイドル。" },
+      { img: "IMG_0132.png", text: "正義感が強くて頼れる姉御肌タイプ。" },
+      { img: "IMG_0133.png", text: "何事にも全力投球！真面目で努力家な優等生。" },
+      { img: "IMG_0134.png", text: "感受性が豊かで芸術センス抜群なおしゃれ女子。" },
+      { img: "IMG_0135.png", text: "ツンと見えて実はデレ多め。ギャップが魅力！" },
+      { img: "IMG_0136.png", text: "自然体で優しい。動物にも好かれる癒しキャラ。" },
+      { img: "IMG_0137.png", text: "大胆でチャレンジャー。怖いもの知らずの前向きガール。" },
+      { img: "IMG_0138.png", text: "クールビューティー系だけど、笑顔は天使級！" }
+    ];
+
+    const result = Math.floor(Math.random() * characters.length);
+    document.getElementById("characterImage").src = characters[result].img;
+    document.getElementById("characterText").textContent = characters[result].text;
+  </script>
+</body>
+</html>
