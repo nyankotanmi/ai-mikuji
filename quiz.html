@@ -1,0 +1,38 @@
+
+<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>診断モード</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+<style>
+body{font-family:'Poppins',sans-serif;background:#fff0f7;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:20px;text-align:center}
+.q{margin-top:2rem}
+button{margin:.6rem;padding:.8rem 2rem;border:none;border-radius:40px;background:#ff6ec7;color:#fff;font-weight:600;cursor:pointer}
+progress{width:80%;height:12px;margin-top:10px}
+</style></head><body>
+<h1>簡単5問診断で推しタイプをチェック！</h1>
+<progress id="prog" value="0" max="5"></progress>
+<div id="app"></div>
+<script>
+const qs=[{q:'友達と過ごすなら？',a:'大人数パーティ',b:'2人でまったり'},
+{q:'休日の過ごし方は？',a:'新スポット巡り',b:'家で映画'},
+{q:'第一印象で言われるのは？',a:'明るい！',b:'落ち着いてる'},
+{q:'やる気が出るのは？',a:'褒められた時',b:'一人で集中'},
+{q:'買い物は？',a:'衝動買い派',b:'じっくり比較'}];
+let i=0,score=0;
+const app=document.getElementById('app');
+render();
+function render(){
+  if(i>=qs.length){finish();return;}
+  const cur=qs[i];
+  app.innerHTML=`<div class="q"><h2>${cur.q}</h2>
+  <button onclick="choose(1)">${cur.a}</button>
+  <button onclick="choose(0)">${cur.b}</button></div>`;
+  document.getElementById('prog').value=i;
+}
+function choose(v){score+=v;i++;render();}
+function finish(){
+  document.getElementById('prog').value=5;
+  const idx=Math.round(score/5*15); // map 0‑5 → 0‑15
+  location.href='result.html?c='+idx;
+}
+</script>
+</body></html>
