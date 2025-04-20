@@ -2,154 +2,95 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AIおみくじ</title>
-  <link href="https://fonts.googleapis.com/css2?family=Single+Day&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>おみくじ演出</title>
   <style>
-    :root {
-      --pink: #FFD1D7;
-      --mint: #B5E4D5;
-      --blue: #B5E0EB;
-      --lavender: #DEC7ED;
-    }
-
     body {
-      font-family: 'Single Day', sans-serif;
-      background: linear-gradient(135deg, var(--blue), var(--pink), var(--lavender));
-      background-size: 300% 300%;
-      animation: gradient 10s ease infinite;
+      background-color: #ffe4f0;
       text-align: center;
-      padding: 3em 1em;
-      color: #555;
-      overflow-x: hidden;
+      overflow: hidden;
     }
 
-    h1 {
-      font-size: 2.2em;
-      margin-bottom: 0.5em;
-      color: #fff;
-      text-shadow: 0 0 8px #fff;
-    }
-
-    input {
-      padding: 12px;
-      font-size: 1em;
-      border: none;
-      border-radius: 20px;
-      outline: none;
-      width: 70%;
-      max-width: 300px;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
-    }
-
-    button {
-      padding: 12px 24px;
-      margin-left: 8px;
-      font-size: 1em;
-      border: none;
-      border-radius: 30px;
-      background-color: var(--mint);
-      color: #fff;
-      cursor: pointer;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-      transition: transform 0.1s ease;
-    }
-
-    button:active {
-      transform: scale(0.95);
-    }
-
-    .mascot {
-      width: 100px;
-      margin: 1em auto;
-      animation: float 3s ease-in-out infinite;
-    }
-
-    #result {
-      margin-top: 2em;
-      background: #fff;
-      border-radius: 15px;
-      padding: 1.5em;
-      max-width: 90%;
-      margin-left: auto;
-      margin-right: auto;
-      box-shadow: 0 0 15px rgba(255, 192, 203, 0.3);
-      white-space: pre-wrap;
-      animation: fadeIn 1s ease-in-out;
+    .character {
+      width: 300px;
+      opacity: 0;
+      animation: fadeIn 1s ease forwards;
+      margin: 50px auto;
       position: relative;
     }
 
-    .kawaii {
-      font-size: 2em;
-      display: block;
-      margin-bottom: 1em;
-      color: var(--lavender);
+    .eye-glint {
+      position: absolute;
+      top: 100px;
+      left: 180px;
+      width: 30px;
+      height: 30px;
+      background: radial-gradient(white, rgba(255,255,255,0));
+      border-radius: 50%;
+      opacity: 0;
+      animation: sparkle 1s ease 1s forwards;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes gradient {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
+    .wink {
+      position: absolute;
+      top: 95px;
+      left: 175px;
+      width: 50px;
+      height: 20px;
+      background: black;
+      border-radius: 50%;
+      transform: scaleY(1);
+      opacity: 0;
+      animation: winkAnim 0.2s ease 2.2s forwards;
     }
 
     .star {
       position: absolute;
-      width: 16px;
-      height: 16px;
-      background: gold;
+      width: 20px;
+      height: 20px;
+      background: yellow;
       border-radius: 50%;
-      box-shadow: 0 0 5px gold;
-      animation: twinkle 3s linear infinite;
+      opacity: 0;
+      animation: starFall 3s ease-out forwards;
     }
 
-    @keyframes twinkle {
-      0% { transform: translateY(0) scale(1); opacity: 1; }
-      100% { transform: translateY(100px) scale(0.5); opacity: 0; }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    @keyframes sparkle {
+      0% { opacity: 0; transform: scale(0.5); }
+      50% { opacity: 1; transform: scale(1.2); }
+      100% { opacity: 0; transform: scale(1); }
+    }
+
+    @keyframes winkAnim {
+      to { opacity: 1; transform: scaleY(0.1); }
+    }
+
+    @keyframes starFall {
+      0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateY(600px) rotate(360deg); opacity: 0; }
     }
   </style>
 </head>
 <body>
-  <h1>今日のAIおみくじ</h1>
-
-  <!-- ユニコーン画像 -->
-  <img src="https://cdn.pixabay.com/photo/2021/06/27/12/45/unicorn-6370827_1280.png" class="mascot" alt="ユニコーン" />
-
-  <input type="text" id="nameInput" placeholder="あなたの名前は？" />
-  <button onclick="drawOmikuji()">占う！</button>
-
-  <div id="result"></div>
+  <div class="character">
+    <img src="your-character-image.png" alt="キャラ画像" width="300" />
+    <div class="eye-glint"></div>
+    <div class="wink"></div>
+  </div>
 
   <script>
-    async function drawOmikuji() {
-      const name = document.getElementById('nameInput').value || "ななしちゃん";
-      const res = await fetch(`/api/draw?name=${encodeURIComponent(name)}`);
-      const data = await res.json();
-
-      const resultDiv = document.getElementById('result');
-      resultDiv.innerHTML = `
-        <span class="kawaii">★ ${name}ちゃんの運勢 ★</span>
-        ${data.result}
-      `;
-
-      // 星をばらまく
-      for (let i = 0; i < 30; i++) {
-        const star = document.createElement('div');
-        star.className = 'star';
-        star.style.left = `${Math.random() * 100}%`;
-        star.style.top = `${Math.random() * -50}px`;
-        star.style.animationDuration = `${2 + Math.random() * 2}s`;
-        resultDiv.appendChild(star);
-      }
+    // 星を複数降らせる
+    for (let i = 0; i < 20; i++) {
+      const star = document.createElement("div");
+      star.classList.add("star");
+      star.style.left = Math.random() * window.innerWidth + "px";
+      star.style.top = -50 + "px";
+      document.body.appendChild(star);
+      star.style.animationDelay = (2.5 + Math.random()) + "s";
     }
   </script>
 </body>
