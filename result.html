@@ -9,6 +9,17 @@
     body { font-family: sans-serif; text-align: center; background: #fff0f5; padding: 20px; }
     #img { width: 80%; max-width: 320px; border-radius: 12px; margin: 20px 0; }
     h2 { color: #ff6ec7; }
+    .share-btns a {
+      display: inline-block;
+      margin: 0.4rem;
+      padding: 0.6rem 1.2rem;
+      border-radius: 24px;
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .tw { background: #1da1f2; }
+    .ln { background: #00c300; }
   </style>
 </head>
 <body>
@@ -16,6 +27,11 @@
   <img id="img" alt="推し画像"/>
   <h2 id="title"></h2>
   <p id="desc"></p>
+
+  <div class="share-btns">
+    <a id="tw" class="tw" target="_blank">Xでシェア</a>
+    <a id="ln" class="ln" target="_blank">LINEでシェア</a>
+  </div>
 
   <script>
     const d = [
@@ -37,13 +53,23 @@
       { i: "IMG_0138.png", t: "Mystic Diva", d: "神秘的で引き込まれるカリスマ！" }
     ];
 
-    // ランダムに選ぶ（d.lengthに合わせる）
     let id = Math.floor(Math.random() * d.length);
     const o = d[id];
 
     document.getElementById("img").src = o.i;
     document.getElementById("title").textContent = o.t;
     document.getElementById("desc").textContent = o.d;
+
+    // SNSシェアリンク作成
+    const baseUrl = location.href.split('?')[0];
+    const resultUrl = `${baseUrl}?c=${id}`;
+    const og = `https://ai-mikuji.vercel.app/api/og?title=${encodeURIComponent(o.t)}`;
+    const text = `私の推しは『${o.t}』！`;
+
+    document.getElementById("tw").href =
+      `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${resultUrl}&hashtags=推し診断&image=${og}`;
+    document.getElementById("ln").href =
+      `https://social-plugins.line.me/lineit/share?url=${resultUrl}`;
   </script>
 </body>
 </html>
