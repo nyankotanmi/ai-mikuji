@@ -2,74 +2,99 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ai-mikuji</title>
-  <style>
-    body {
-      background: linear-gradient(to right, #ffe4f0, #fff6f9);
-      font-family: 'Arial', sans-serif;
-      text-align: center;
-      padding: 50px 20px;
-      overflow: hidden;
-    }
-
-    h1 {
-      font-size: 32px;
-      color: #ff1493;
-      text-shadow: 2px 2px 5px #fff;
-    }
-
-    button {
-      font-size: 20px;
-      padding: 15px 40px;
-      background: #ff69b4;
-      color: white;
-      border: none;
-      border-radius: 40px;
-      cursor: pointer;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      margin-top: 30px;
-    }
-
-    button:hover {
-      opacity: 0.9;
-    }
-
-    .float {
-      position: absolute;
-      animation: floatUp 5s linear infinite;
-      opacity: 0.6;
-    }
-
-    @keyframes floatUp {
-      0% {
-        transform: translateY(100vh) rotate(0deg);
-        opacity: 0;
-      }
-      50% { opacity: 1; }
-      100% {
-        transform: translateY(-100px) rotate(360deg);
-        opacity: 0;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ai‑mikuji ✦ Buzz Edition</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pink1:#ff6ec7;
+  --pink2:#ffa3d1;
+  --pink3:#ffd2e8;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Poppins',sans-serif;
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+  background:linear-gradient(135deg,var(--pink1),var(--pink2),var(--pink3));
+  animation:bgShift 10s ease-in-out infinite alternate;
+}
+@keyframes bgShift{
+  0%{filter:hue-rotate(0deg)}
+  100%{filter:hue-rotate(50deg)}
+}
+h1{
+  font-size:clamp(1.8rem,5vw,3rem);
+  color:#fff;
+  text-shadow:0 4px 8px rgba(0,0,0,.2);
+  margin-bottom:1.5rem;
+}
+button{
+  padding:1rem 3rem;
+  font-size:clamp(1rem,2.5vw,1.3rem);
+  border:none;
+  border-radius:50px;
+  background:#fff;
+  color:var(--pink1);
+  font-weight:600;
+  cursor:pointer;
+  box-shadow:0 8px 20px rgba(0,0,0,.25);
+  transition:transform .3s;
+}
+button:hover{
+  transform:scale(1.08) rotate(-2deg);
+}
+.floaty{
+  position:absolute;
+  opacity:.8;
+  animation:floatUp linear infinite;
+  pointer-events:none;
+}
+@keyframes floatUp{
+  0%{transform:translateY(110vh) rotate(0deg);opacity:0}
+  30%{opacity:1}
+  100%{transform:translateY(-15vh) rotate(360deg);opacity:0}
+}
+</style>
 </head>
 <body>
-  <h1>今日のあなたの運勢は？</h1>
-  <button onclick="location.href='result.html'">おみくじを引く！</button>
+<h1>今日の推しタイプを占おう！</h1>
+<button id="start">START</button>
 
-  <script>
-    const emojis = ["⭐", "🌙", "💫", "✨", "🌟"];
-    for (let i = 0; i < 30; i++) {
-      const div = document.createElement("div");
-      div.className = "float";
-      div.style.left = Math.random() * 100 + "vw";
-      div.style.fontSize = (Math.random() * 24 + 20) + "px";
-      div.style.animationDelay = Math.random() * 5 + "s";
-      div.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-      document.body.appendChild(div);
-    }
-  </script>
+<script>
+// redirect with subtle loading
+document.getElementById('start').addEventListener('click',()=>{
+  const overlay=document.createElement('div');
+  overlay.style.position='fixed';
+  overlay.style.top=0;overlay.style.left=0;
+  overlay.style.width='100%';overlay.style.height='100%';
+  overlay.style.background='rgba(255,255,255,.8)';
+  overlay.style.display='flex';
+  overlay.style.alignItems='center';
+  overlay.style.justifyContent='center';
+  overlay.innerHTML='<span style="font-size:2rem;color:#ff6ec7;">Loading…★</span>';
+  document.body.appendChild(overlay);
+  setTimeout(()=>{location.href='result.html'},800); // small delay for UX
+});
+
+// generate floating stars & moons
+const emojis=['⭐','🌙','💖','✨','💫'];
+for(let i=0;i<40;i++){
+  const span=document.createElement('span');
+  span.className='floaty';
+  span.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+  const size=Math.random()*30+20;
+  span.style.fontSize=size+'px';
+  span.style.left=Math.random()*100+'vw';
+  span.style.animationDuration=(Math.random()*6+6)+'s';
+  span.style.animationDelay=Math.random()*5+'s';
+  document.body.appendChild(span);
+}
+</script>
 </body>
 </html>

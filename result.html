@@ -2,188 +2,165 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>おみくじ結果</title>
-  <style>
-    body {
-      background-color: #ffe4f0;
-      font-family: 'Arial', sans-serif;
-      text-align: center;
-      padding: 20px;
-      overflow-x: hidden;
-    }
-
-    .character-container {
-      position: relative;
-      display: inline-block;
-      margin-top: 30px;
-    }
-
-    img {
-      width: 300px;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    }
-
-    .eye-glint {
-      position: absolute;
-      top: 90px;
-      left: 180px;
-      width: 30px;
-      height: 30px;
-      background: radial-gradient(white, rgba(255,255,255,0));
-      border-radius: 50%;
-      opacity: 0;
-      animation: sparkle 1s ease 1s forwards;
-    }
-
-    .text {
-      margin-top: 20px;
-      font-size: 18px;
-      font-weight: bold;
-      color: #444;
-      max-width: 90%;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .star {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background: yellow;
-      border-radius: 50%;
-      opacity: 0;
-      animation: starFall 3s ease-out forwards;
-    }
-
-    .share-buttons, .action-buttons {
-      margin-top: 30px;
-    }
-
-    .share-buttons a, .action-buttons button {
-      color: white;
-      background-color: #1da1f2;
-      padding: 10px 20px;
-      margin: 10px;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: bold;
-      display: inline-block;
-      border: none;
-      cursor: pointer;
-    }
-
-    .share-buttons a:hover, .action-buttons button:hover {
-      opacity: 0.8;
-    }
-
-    #line-share {
-      background-color: #00c300;
-    }
-
-    #retry-button {
-      background-color: #ff69b4;
-    }
-
-    #screenshot-button {
-      background-color: #6a5acd;
-    }
-
-    @keyframes sparkle {
-      0% { opacity: 0; transform: scale(0.5); }
-      50% { opacity: 1; transform: scale(1.2); }
-      100% { opacity: 0; transform: scale(1); }
-    }
-
-    @keyframes starFall {
-      0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
-      50% { opacity: 1; }
-      100% { transform: translateY(600px) rotate(360deg); opacity: 0; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ai‑mikuji ✦ Result</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --grad1:#ff6ec7;
+  --grad2:#9e6bff;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:linear-gradient(120deg,var(--grad1),var(--grad2));
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  padding:20px;
+  font-family:'Poppins',sans-serif;
+  overflow-x:hidden;
+}
+#card{
+  background:#fff;
+  border-radius:20px;
+  padding:20px;
+  text-align:center;
+  box-shadow:0 10px 30px rgba(0,0,0,.25);
+  position:relative;
+  max-width:340px;
+}
+#card img{
+  width:100%;
+  border-radius:15px;
+}
+h2{
+  font-size:1.4rem;
+  color:#ff6ec7;
+  margin:1rem 0 .5rem;
+}
+p{color:#444;font-size:.95rem;margin-bottom:.5rem}
+button, a.share{
+  margin-top:1rem;
+  padding:.8rem 1.5rem;
+  border:none;
+  border-radius:40px;
+  font-weight:600;
+  cursor:pointer;
+  transition:transform .25s;
+  font-size:.9rem;
+}
+button:hover, a.share:hover{transform:scale(1.07)}
+#retry{background:#ff6ec7;color:#fff}
+#shot{background:#6a5acd;color:#fff}
+.share{background:#1da1f2;color:#fff;text-decoration:none;display:inline-block}
+#shareLine{background:#00c300}
+#lucky{font-weight:700;color:#9e6bff}
+.confetti{
+  position:fixed;inset:0;pointer-events:none;
+}
+.floatBg{
+  position:fixed;
+  top:0;left:0;width:100%;height:100%;
+  overflow:hidden;z-index:-1;
+}
+.floatBg span{
+  position:absolute;
+  display:block;
+  font-size:20px;
+  opacity:0.8;
+  animation:float 8s linear infinite;
+}
+@keyframes float{
+  0%{transform:translateY(100vh) rotate(0deg);opacity:0}
+  20%{opacity:1}
+  100%{transform:translateY(-120vh) rotate(360deg);opacity:0}
+}
+</style>
 </head>
 <body>
-  <h1>今日のあなたのタイプは…</h1>
-  <div class="character-container" id="capture-area">
-    <img id="characterImage" src="" alt="キャラ画像">
-    <div class="eye-glint"></div>
-    <p class="text" id="characterText"></p>
-    <p class="text" id="luckyItemText"></p>
-  </div>
+<!-- floating emoji background -->
+<div class="floatBg" id="bg"></div>
 
-  <div class="action-buttons">
-    <button id="screenshot-button">スクショを撮る</button>
-    <button id="retry-button" onclick="location.reload()">もう1回引く</button>
-  </div>
+<div id="card">
+  <img id="charImg" src="" alt="character">
+  <h2 id="charTitle">Your Type</h2>
+  <p id="charDesc"></p>
+  <p id="lucky"></p>
 
-  <div class="share-buttons">
-    <h2>結果をシェアしよう！</h2>
-    <a id="twitter-share" target="_blank">X（旧Twitter）でシェア</a>
-    <a id="line-share" target="_blank">LINEでシェア</a>
-  </div>
+  <button id="retry">もう1回引く</button>
+  <button id="shot">スクショ保存</button>
+  <br>
+  <a id="shareX" class="share" target="_blank">Xでシェア</a>
+  <a id="shareLine" class="share" target="_blank">LINEでシェア</a>
+</div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <script>
-    const characters = [
-      { img: "IMG_0123.png", text: "繊細だけど芯が強い。静かに優しさを届ける癒し系。" },
-      { img: "IMG_0124.png", text: "明るくてムードメーカー。みんなの太陽みたいな存在。" },
-      { img: "IMG_0125.png", text: "冷静でクール。でも誰よりも仲間想いの一面も。" },
-      { img: "IMG_0126.png", text: "自由で好奇心旺盛。楽しいことが大好きな冒険女子！" },
-      { img: "IMG_0127.png", text: "ふわっとした笑顔の裏に情熱を秘めた努力家。" },
-      { img: "IMG_0128.png", text: "サバサバして見えるけど、実はロマンチスト。" },
-      { img: "IMG_0129.png", text: "論理的で頭の回転が早い。ひらめきの天才肌。" },
-      { img: "IMG_0130.png", text: "おっとり見えて実はマイペースな芯の強さアリ。" },
-      { img: "IMG_0131.png", text: "小悪魔的魅力で人を惹きつける天性のアイドル。" },
-      { img: "IMG_0132.png", text: "正義感が強くて頼れる姉御肌タイプ。" },
-      { img: "IMG_0133.png", text: "何事にも全力投球！真面目で努力家な優等生。" },
-      { img: "IMG_0134.png", text: "感受性が豊かで芸術センス抜群なおしゃれ女子。" },
-      { img: "IMG_0135.png", text: "ツンと見えて実はデレ多め。ギャップが魅力！" },
-      { img: "IMG_0136.png", text: "自然体で優しい。動物にも好かれる癒しキャラ。" },
-      { img: "IMG_0137.png", text: "大胆でチャレンジャー。怖いもの知らずの前向きガール。" },
-      { img: "IMG_0138.png", text: "クールビューティー系だけど、笑顔は天使級！" }
-    ];
+<canvas id="confetti" class="confetti"></canvas>
 
-    const luckyItems = [
-      "フルーツキャンディ", "ネイルシール", "ハートのイヤリング",
-      "ラメ入りペン", "推しのアクスタ", "ピンクのヘアピン",
-      "キラキラスマホケース", "ふわふわのぬいぐるみ"
-    ];
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script>
+const data=[
+  {img:'IMG_0123.png',title:'Healing Angel',desc:'繊細だけど芯が強い。静かに優しさを届ける癒し系。'},
+  {img:'IMG_0124.png',title:'Sunshine Idol',desc:'明るくてムードメーカー。みんなの太陽みたいな存在。'},
+  {img:'IMG_0125.png',title:'Cool Guardian',desc:'冷静でクール。でも誰よりも仲間想いの一面も。'},
+  {img:'IMG_0126.png',title:'Adventure Girl',desc:'自由で好奇心旺盛。楽しいことが大好きな冒険女子！'},
+  {img:'IMG_0127.png',title:'Hidden Flame',desc:'ふわっとした笑顔の裏に情熱を秘めた努力家。'},
+  {img:'IMG_0128.png',title:'Romantic Rebel',desc:'サバサバして見えるけど、実はロマンチスト。'},
+  {img:'IMG_0129.png',title:'Genius Spark',desc:'論理的で頭の回転が早い。ひらめきの天才肌。'},
+  {img:'IMG_0130.png',title:'Chill Breeze',desc:'おっとり見えて実はマイペースな芯の強さアリ。'},
+  {img:'IMG_0131.png',title:'Sweet Devil',desc:'小悪魔的魅力で人を惹きつける天性のアイドル。'},
+  {img:'IMG_0132.png',title:'Brave Leader',desc:'正義感が強くて頼れる姉御肌タイプ。'},
+  {img:'IMG_0133.png',title:'Perfect Ace',desc:'何事にも全力投球！真面目で努力家な優等生。'},
+  {img:'IMG_0134.png',title:'Artistic Muse',desc:'感受性が豊かで芸術センス抜群なおしゃれ女子。'},
+  {img:'IMG_0135.png',title:'Tsundere Charm',desc:'ツンと見えて実はデレ多め。ギャップが魅力！'},
+  {img:'IMG_0136.png',title:'Nature Healer',desc:'自然体で優しい。動物にも好かれる癒しキャラ。'},
+  {img:'IMG_0137.png',title:'Fearless Challenger',desc:'大胆でチャレンジャー。怖いもの知らずの前向きガール。'},
+  {img:'IMG_0138.png',title:'Ice Beauty',desc:'クールビューティー系だけど、笑顔は天使級！'}
+];
+const luckyItems=['フルーツキャンディ','ネイルシール','ハートのイヤリング','ラメ入りペン','推しのアクスタ','ピンクのヘアピン','キラキラスマホケース','ふわふわのぬいぐるみ'];
 
-    const result = Math.floor(Math.random() * characters.length);
-    document.getElementById("characterImage").src = characters[result].img;
-    document.getElementById("characterText").textContent = characters[result].text;
+function draw(){
+  const r=Math.floor(Math.random()*data.length);
+  const info=data[r];
+  document.getElementById('charImg').src=info.img;
+  document.getElementById('charTitle').textContent=info.title;
+  document.getElementById('charDesc').textContent=info.desc;
+  document.getElementById('lucky').textContent='ラッキーアイテム：'+luckyItems[Math.floor(Math.random()*luckyItems.length)];
 
-    const lucky = luckyItems[Math.floor(Math.random() * luckyItems.length)];
-    document.getElementById("luckyItemText").textContent = "ラッキーアイテム： " + lucky;
+  // confetti burst
+  confetti({particleCount:120,spread:70,origin:{y:0.6}});
+  // share links
+  const url=encodeURIComponent(location.href);
+  const txt=encodeURIComponent('私の推しタイプは『'+info.title+'』でした！');
+  document.getElementById('shareX').href=`https://twitter.com/intent/tweet?text=${txt}&url=${url}`;
+  document.getElementById('shareLine').href=`https://social-plugins.line.me/lineit/share?url=${url}`;
+}
+draw();
 
-    setTimeout(() => {
-      for (let i = 0; i < 20; i++) {
-        const star = document.createElement("div");
-        star.classList.add("star");
-        star.style.left = Math.random() * window.innerWidth + "px";
-        star.style.top = -30 + "px";
-        star.style.animationDelay = (1.5 + Math.random()) + "s";
-        document.body.appendChild(star);
-      }
-    }, 1000);
+document.getElementById('retry').onclick=()=>{draw()};
+document.getElementById('shot').onclick=()=>{
+  html2canvas(document.getElementById('card')).then(c=>{
+    const link=document.createElement('a');
+    link.download='omikuji_result.png';
+    link.href=c.toDataURL();
+    link.click();
+  });
+};
 
-    const pageUrl = window.location.href;
-    const text = encodeURIComponent("私の推しタイプはこの子でした！");
-    document.getElementById("twitter-share").href =
-      `https://twitter.com/intent/tweet?text=${text}&url=${pageUrl}`;
-    document.getElementById("line-share").href =
-      `https://social-plugins.line.me/lineit/share?url=${pageUrl}`;
-
-    document.getElementById("screenshot-button").addEventListener("click", () => {
-      html2canvas(document.getElementById("capture-area")).then(canvas => {
-        const link = document.createElement("a");
-        link.download = "omikuji_result.png";
-        link.href = canvas.toDataURL();
-        link.click();
-      });
-    });
-  </script>
+// floating emojis background
+const bg=document.getElementById('bg');
+const emojis=['⭐','🌙','✨','💖','💫'];
+for(let i=0;i<50;i++){
+  const span=document.createElement('span');
+  span.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+  span.style.left=Math.random()*100+'vw';
+  span.style.fontSize=(Math.random()*24+16)+'px';
+  span.style.animationDuration=(Math.random()*6+6)+'s';
+  span.style.animationDelay=Math.random()*4+'s';
+  bg.appendChild(span);
+}
+</script>
 </body>
 </html>
