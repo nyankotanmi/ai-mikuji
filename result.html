@@ -11,7 +11,7 @@
       font-family: 'Arial', sans-serif;
       text-align: center;
       padding: 20px;
-      overflow: hidden;
+      overflow-x: hidden;
     }
 
     .character-container {
@@ -58,6 +58,39 @@
       animation: starFall 3s ease-out forwards;
     }
 
+    .share-buttons, .action-buttons {
+      margin-top: 30px;
+    }
+
+    .share-buttons a, .action-buttons button {
+      color: white;
+      background-color: #1da1f2;
+      padding: 10px 20px;
+      margin: 10px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      display: inline-block;
+      border: none;
+      cursor: pointer;
+    }
+
+    .share-buttons a:hover, .action-buttons button:hover {
+      opacity: 0.8;
+    }
+
+    #line-share {
+      background-color: #00c300;
+    }
+
+    #retry-button {
+      background-color: #ff69b4;
+    }
+
+    #screenshot-button {
+      background-color: #6a5acd;
+    }
+
     @keyframes sparkle {
       0% { opacity: 0; transform: scale(0.5); }
       50% { opacity: 1; transform: scale(1.2); }
@@ -73,12 +106,25 @@
 </head>
 <body>
   <h1>今日のあなたのタイプは…</h1>
-  <div class="character-container">
+  <div class="character-container" id="capture-area">
     <img id="characterImage" src="" alt="キャラ画像">
     <div class="eye-glint"></div>
+    <p class="text" id="characterText"></p>
+    <p class="text" id="luckyItemText"></p>
   </div>
-  <p class="text" id="characterText"></p>
 
+  <div class="action-buttons">
+    <button id="screenshot-button">スクショを撮る</button>
+    <button id="retry-button" onclick="location.reload()">もう1回引く</button>
+  </div>
+
+  <div class="share-buttons">
+    <h2>結果をシェアしよう！</h2>
+    <a id="twitter-share" target="_blank">X（旧Twitter）でシェア</a>
+    <a id="line-share" target="_blank">LINEでシェア</a>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script>
     const characters = [
       { img: "IMG_0123.png", text: "繊細だけど芯が強い。静かに優しさを届ける癒し系。" },
@@ -99,9 +145,18 @@
       { img: "IMG_0138.png", text: "クールビューティー系だけど、笑顔は天使級！" }
     ];
 
+    const luckyItems = [
+      "フルーツキャンディ", "ネイルシール", "ハートのイヤリング",
+      "ラメ入りペン", "推しのアクスタ", "ピンクのヘアピン",
+      "キラキラスマホケース", "ふわふわのぬいぐるみ"
+    ];
+
     const result = Math.floor(Math.random() * characters.length);
     document.getElementById("characterImage").src = characters[result].img;
     document.getElementById("characterText").textContent = characters[result].text;
+
+    const lucky = luckyItems[Math.floor(Math.random() * luckyItems.length)];
+    document.getElementById("luckyItemText").textContent = "ラッキーアイテム： " + lucky;
 
     setTimeout(() => {
       for (let i = 0; i < 20; i++) {
@@ -113,6 +168,22 @@
         document.body.appendChild(star);
       }
     }, 1000);
+
+    const pageUrl = window.location.href;
+    const text = encodeURIComponent("私の推しタイプはこの子でした！");
+    document.getElementById("twitter-share").href =
+      `https://twitter.com/intent/tweet?text=${text}&url=${pageUrl}`;
+    document.getElementById("line-share").href =
+      `https://social-plugins.line.me/lineit/share?url=${pageUrl}`;
+
+    document.getElementById("screenshot-button").addEventListener("click", () => {
+      html2canvas(document.getElementById("capture-area")).then(canvas => {
+        const link = document.createElement("a");
+        link.download = "omikuji_result.png";
+        link.href = canvas.toDataURL();
+        link.click();
+      });
+    });
   </script>
 </body>
 </html>
