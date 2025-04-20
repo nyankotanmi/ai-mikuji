@@ -1,7 +1,7 @@
 {
   "functions": {
     "api/og.js": {
-      "runtime": "vercel/edge@2.5.1"
+      "runtime": "experimental-edge"
     }
   }
 }
