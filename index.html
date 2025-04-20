@@ -21,6 +21,7 @@
       text-align: center;
       padding: 3em 1em;
       color: #555;
+      overflow-x: hidden;
     }
 
     h1 {
@@ -58,6 +59,12 @@
       transform: scale(0.95);
     }
 
+    .mascot {
+      width: 100px;
+      margin: 1em auto;
+      animation: float 3s ease-in-out infinite;
+    }
+
     #result {
       margin-top: 2em;
       background: #fff;
@@ -69,12 +76,14 @@
       box-shadow: 0 0 15px rgba(255, 192, 203, 0.3);
       white-space: pre-wrap;
       animation: fadeIn 1s ease-in-out;
+      position: relative;
     }
 
     .kawaii {
       font-size: 2em;
       display: block;
-      margin-top: 1em;
+      margin-bottom: 1em;
+      color: var(--lavender);
     }
 
     @keyframes fadeIn {
@@ -88,21 +97,32 @@
       100% { background-position: 0% 50%; }
     }
 
-    .mascot {
-      width: 100px;
-      margin: 1em auto;
-      animation: float 3s ease-in-out infinite;
-    }
-
     @keyframes float {
       0%, 100% { transform: translateY(0px); }
       50% { transform: translateY(-10px); }
+    }
+
+    .star {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      background: gold;
+      border-radius: 50%;
+      box-shadow: 0 0 5px gold;
+      animation: twinkle 3s linear infinite;
+    }
+
+    @keyframes twinkle {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(100px) scale(0.5); opacity: 0; }
     }
   </style>
 </head>
 <body>
   <h1>今日のAIおみくじ</h1>
-  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Emoji_u1f984.svg/2048px-Emoji_u1f984.svg.png" class="mascot" alt="ユニコーン">
+
+  <!-- ユニコーン画像 -->
+  <img src="https://cdn.pixabay.com/photo/2021/06/27/12/45/unicorn-6370827_1280.png" class="mascot" alt="ユニコーン" />
 
   <input type="text" id="nameInput" placeholder="あなたの名前は？" />
   <button onclick="drawOmikuji()">占う！</button>
@@ -117,9 +137,19 @@
 
       const resultDiv = document.getElementById('result');
       resultDiv.innerHTML = `
-        <span class="kawaii">★${name}ちゃんの運勢★</span>\n
+        <span class="kawaii">★ ${name}ちゃんの運勢 ★</span>
         ${data.result}
       `;
+
+      // 星をばらまく
+      for (let i = 0; i < 30; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.left = `${Math.random() * 100}%`;
+        star.style.top = `${Math.random() * -50}px`;
+        star.style.animationDuration = `${2 + Math.random() * 2}s`;
+        resultDiv.appendChild(star);
+      }
     }
   </script>
 </body>
