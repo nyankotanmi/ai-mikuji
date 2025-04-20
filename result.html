@@ -42,7 +42,7 @@ const q=new URLSearchParams(location.search);let c=q.get('c');if(c===null)c=Math
 render(c);
 function render(id){
  const o=d[id];
- document.getElementById('img').src=o.i;
+ document.getElementById("img").src = d[id].i;
  document.getElementById('title').textContent=o.t;
  document.getElementById('desc').textContent=o.d;
  document.getElementById('lucky').textContent='ラッキーアイテム：'+['🍭','💎','🎧','📸'][Math.random()*4|0];
