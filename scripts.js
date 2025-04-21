@@ -1,1 +1,1 @@
-// Language switcher, animation triggers, etc.
+// ローカル保存・シェアカウント・特典解放・画像DL ロジック
