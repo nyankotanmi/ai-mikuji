@@ -1,18 +1,27 @@
 
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>診断結果</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>あなたの推しは…！</h1>
-  <div id="character-card">
-    <!-- キャラ画像や肩書きがここに出る -->
+  <div class="card">
+    <img src="IMG_0123.png" class="char-img" />
+    <h2 class="title">Chill Mystic</h2>
+    <p class="desc">落ち着いた不思議オーラの持ち主。</p>
+    <p class="match">相性のいい推し：Cool Beauty</p>
+    <div class="buttons">
+      <button id="share-btn">Xでシェア</button>
+      <button id="download-btn">画像保存</button>
+    </div>
+    <div class="bonus" style="display:none;">
+      <p>特典解放！</p>
+      <img src="bonus.png" class="bonus-img" />
+    </div>
   </div>
-  <button id="share-btn">Xでシェア</button>
-  <button id="download-btn">画像保存</button>
   <script src="scripts.js"></script>
 </body>
 </html>
