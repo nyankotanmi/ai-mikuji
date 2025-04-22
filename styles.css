@@ -1,34 +1,49 @@
 
 body {
   margin: 0;
-  font-family: 'Arial', sans-serif;
-  background: linear-gradient(135deg, #ffcce6, #ccffff);
+  font-family: 'Helvetica', sans-serif;
+  background: linear-gradient(to bottom, #ffffff, #e0f7fa);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
   text-align: center;
 }
-.container {
+.launch {
   padding: 2em;
 }
-.start-button {
-  font-size: 1.5em;
+.experience {
+  display: none;
+  padding: 2em;
+}
+.character {
+  width: 200px;
+  animation: float 2s ease-in-out infinite;
+}
+.dialogue {
+  font-size: 1.2em;
+  margin-top: 1em;
+  color: #555;
+}
+.translation {
+  font-size: 0.9em;
+  color: #999;
+  margin-top: 0.5em;
+}
+button {
+  margin-top: 1.5em;
   padding: 1em 2em;
-  background: #ff66cc;
+  background: #ff90b3;
   color: white;
   border: none;
-  border-radius: 50px;
+  border-radius: 2em;
+  font-size: 1em;
 }
-.card {
-  background: white;
-  margin: 1em auto;
-  padding: 1em;
-  max-width: 90%;
-  border-radius: 1em;
-  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+.hidden {
+  display: none;
 }
-.char-img {
-  width: 100%;
-  border-radius: 1em;
-}
-.bonus-img {
-  width: 80%;
-  margin-top: 1em;
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
 }
