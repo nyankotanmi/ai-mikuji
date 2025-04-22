@@ -10,11 +10,7 @@ body {
   height: 100vh;
   text-align: center;
 }
-.launch {
-  padding: 2em;
-}
-.experience {
-  display: none;
+.launch, .experience {
   padding: 2em;
 }
 .character {
