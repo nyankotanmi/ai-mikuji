@@ -47,18 +47,15 @@ button {
   border-radius: 16px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
 }
-
 .char-img {
   width: 100%;
   max-width: 100%;
   height: auto;
-  max-height: 400px;
   object-fit: contain;
   display: block;
   margin: 0 auto 1em;
   border-radius: 12px;
 }
-
 /* おまけで隠したい要素に */
 .hidden {
   display: none;
