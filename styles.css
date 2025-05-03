@@ -36,25 +36,36 @@ button {
   border-radius: 2em;
   font-size: 1em;
 }
-.char-img {
-  width: auto;
-  max-width: 100%;
-  height: auto;
-  max-height: 350px;  /* ← ここで縦の表示制限をかける */
-  display: block;
-  object-fit: contain;
-  margin: 0 auto;
-  border-radius: 12px;
-}
 .card {
   overflow: visible;
   padding: 1.5em;
   text-align: center;
+  max-width: 500px;
+  width: 90%;
+  margin: 0 auto;
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
 }
+
+.char-img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  max-height: 400px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto 1em;
+  border-radius: 12px;
+}
+
+/* おまけで隠したい要素に */
 .hidden {
   display: none;
 }
+
+/* キャラがふわふわ浮く系の演出（必要なら使ってね） */
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+  50%      { transform: translateY(-10px); }
 }
