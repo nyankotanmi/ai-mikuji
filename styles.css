@@ -37,11 +37,12 @@ button {
   font-size: 1em;
 }
 .char-img {
-  width: 100%;
+  width: auto;
+  max-width: 100%;
   height: auto;
+  max-height: 350px;  /* ← ここで縦の表示制限をかける */
   display: block;
-  object-fit: contain;  /* 必要なら cover → contain に */
-  max-width: 400px;     /* 必要に応じて制限 */
+  object-fit: contain;
   margin: 0 auto;
   border-radius: 12px;
 }
