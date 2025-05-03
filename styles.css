@@ -36,6 +36,20 @@ button {
   border-radius: 2em;
   font-size: 1em;
 }
+.char-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;  /* 必要なら cover → contain に */
+  max-width: 400px;     /* 必要に応じて制限 */
+  margin: 0 auto;
+  border-radius: 12px;
+}
+.card {
+  overflow: visible;
+  padding: 1.5em;
+  text-align: center;
+}
 .hidden {
   display: none;
 }
