@@ -61,8 +61,29 @@ button {
   display: none;
 }
 
+/* アフィリエイト用ボックス */
+.affi-box {
+  background-color: #fff4f8;
+  border: 2px dashed #ff90b3;
+  padding: 1em;
+  margin-top: 1em;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.affi-box a {
+  display: inline-block;
+  background: #ff90b3;
+  color: white;
+  padding: 0.5em 1em;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
 /* キャラがふわふわ浮く系の演出（必要なら使ってね） */
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50%      { transform: translateY(-10px); }
 }
+
